@@ -1,10 +1,14 @@
 {
-	"title": "Some lovely pictures",
+	"title": "一些好康的",
 	"hidden": false,
-	"description": "The world is vast, and you have to go explore it.",
-	"date": "2025-08-01",
+	"description": "owo",
+	"date": "2026-01-18",
 	"location": "Bilibili",
-	"tags": ["Kawai", "Cute", "Moe"],
+	"tags": [
+		"Kawai",
+		"Cute",
+		"Moe"
+	],
 	"layout": "masonry",
 	"columns": 3
 }

@@ -1,49 +1,31 @@
+# 关于我
+## 👋 自我介绍
+你好呀！我是 **MnMeizz**，一名 **苦逼计算机系大学生**，现居 **杭州**。
 
-This website is built with the **Astro** framework using the [Mizuki](https://github.com/matsuzaka-yuki/mizuki) theme.
+我热爱 **编程、剪辑**，开这个博客的初衷是：
+- 记录自己的学习和成长轨迹，把零散的知识系统化
+- 分享踩过的坑和解决问题的思路，希望能帮到同路人
+- 结识更多志同道合的朋友，一起交流进步
 
-::github{repo="matsuzaka-yuki/Mizuki"}
+## 🛠️ 技术栈
+### 核心技能
+- 编程语言：C、C++、Python、Java、JavaScript
+- 技术框架：Vue.js、Electron
+- 工具/其他：Git、Docker
 
-## 🌟 Theme Features
+### 关注方向
+- 前端工程化与性能优化
+- 后端服务架构设计
 
-### 🎨 Design & User Experience
-- **Modern & Elegant Design** - Clean, minimalist interface with beautiful typography
-- **Fully Responsive** - Optimized for all devices from mobile to desktop
-- **Dark/Light Mode** - Automatic theme switching with smooth transitions
-- **Beautiful Typography** - Enhanced readability with JetBrains Mono font
-- **Smooth Animations** - Fluid page transitions and interactive elements
+## ✨ 博客定位
+这个博客主要分享以下内容：
+1. **技术干货**：日常开发中的实战技巧、框架使用教程、问题排查思路
+2. **学习笔记**：新知识点的总结、技术书籍的读后感
+3. **成长思考**：职业规划、学习方法、程序员的日常感悟
 
-### 🔍 Content & Search
-- **Advanced Search** - Powered by [Pagefind](https://pagefind.app/) for fast, accurate results
-- **Enhanced Markdown** - Extended syntax with code highlighting and math support
-- **Interactive Table of Contents** - Auto-scroll navigation for long articles
-- **RSS Feed Generation** - Stay updated with automatic feed generation
-- **Reading Time Estimation** - Know how long articles take to read
-- **Post Categorization** - Organize content with tags and categories
-
-
-
-### 📱 Special Pages
-- **Anime Tracking Page** - Track your anime watching progress with ratings
-- **Friends Links Page** - Showcase friend websites with beautiful cards
-- **Diary/Moments Page** - Share life moments like social media posts
-- **Archive Page** - Organized timeline view of all posts
-- **About Page** - Customizable personal introduction (this page!)
-
-### 🛠 Technical Features
-- **Enhanced Code Blocks** - Powered by [Expressive Code](https://expressive-code.com/)
-- **Math Support** - LaTeX rendering with KaTeX for mathematical expressions
-- **Image Optimization** - PhotoSwipe gallery with lazy loading
-- **SEO Optimized** - Built-in sitemap and meta tags for better search visibility
-- **Performance Optimized** - Fast loading with caching and optimization
-- **Comment System Ready** - Integration support for Twikoo comments
-
-### 🎯 Advanced Markdown Features
-- **Callouts & Admonitions** - Beautiful info boxes with `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`
-- **Mathematical Equations** - Write LaTeX math with `$inline$` and `$$block$$` syntax
-- **GitHub Cards** - Embed repository cards with `::github{repo="user/repo"}`
-- **Syntax Highlighting** - Advanced code highlighting with line numbers
-- **Copy Code Buttons** - Easy code copying functionality
-
+## 📫 联系我
+- 邮箱：1059809116@qq.com
+- GitHub：https://github.com/MnMeizz
 ---
-
-*Built with ❤️ using Astro and inspired by modern web design principles.*
+> 最后更新：2026年1月18日
+> 愿你走出半生，归来仍是少年 🌟

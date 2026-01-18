@@ -1,0 +1,78 @@
+/* 废墟图书馆风格 - 左到右全局入场遮罩 */
+.lobotomy-library-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    /* 层级高于所有元素 */
+    pointer-events: none;
+    /* 不遮挡交互 */
+    background: linear-gradient(90deg,
+            var(--bg-color, #ffffff) 0%,
+            rgba(255, 255, 255, 0.95) 5%,
+            rgba(255, 255, 255, 0.1) 15%,
+            transparent 100%);
+    background-size: 200% 100%;
+    background-position: -100% 0;
+    will-change: background-position;
+    transition: none;
+    /* 硬件加速（复用项目现有优化） */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* 暗色主题适配（废墟图书馆深色幕布质感） */
+:root.dark .lobotomy-library-overlay {
+    background: linear-gradient(90deg,
+            var(--bg-color, #1a1a1a) 0%,
+            rgba(26, 26, 26, 0.95) 5%,
+            rgba(26, 26, 26, 0.1) 15%,
+            transparent 100%);
+}
+
+/* 核心动画：左到右推进（模拟废墟图书馆幕间扫过效果） */
+@keyframes lobotomy-slide-in {
+    0% {
+        background-position: -100% 0;
+    }
+
+    80% {
+        background-position: 100% 0;
+        opacity: 1;
+    }
+
+    100% {
+        background-position: 100% 0;
+        opacity: 0;
+    }
+}
+
+/* 触发动画的类 */
+.lobotomy-library-overlay.active {
+    animation: lobotomy-slide-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 移动端适配：缩短动画时长，弱化渐变（避免卡顿） */
+@media (max-width: 768px) {
+    .lobotomy-library-overlay.active {
+        animation-duration: 0.8s;
+    }
+
+    .lobotomy-library-overlay {
+        background: linear-gradient(90deg,
+                var(--bg-color) 0%,
+                rgba(var(--bg-rgb), 0.9) 8%,
+                rgba(var(--bg-rgb), 0.05) 18%,
+                transparent 100%);
+    }
+}
+
+/* 减少动画偏好（无障碍适配） */
+@media (prefers-reduced-motion: reduce) {
+    .lobotomy-library-overlay.active {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+}

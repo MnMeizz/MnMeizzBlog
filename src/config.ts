@@ -24,7 +24,7 @@ const SITE_TIMEZONE = 8; //设置你的网站时区 from -12 to 12 default in UT
 export const siteConfig: SiteConfig = {
 	title: "MnMeizz",
 	subtitle: "Blog",
-	siteURL: "https://mizuki.mysqil.com/", // 请替换为你的站点URL，以斜杠结尾
+	siteURL: "https://mnmeizzblog-3sfaj212tn.edgeone.cool/", // 请替换为你的站点URL，以斜杠结尾
 	siteStartDate: "2026-01-18", // 站点开始运行日期，用于站点统计组件计算运行天数
 
 	timeZone: SITE_TIMEZONE,
@@ -55,7 +55,7 @@ export const siteConfig: SiteConfig = {
 		// 顶栏标题文本
 		text: "LOGO",
 		// 顶栏标题图标路径，默认使用 public/assets/home/home.png
-		icon: "assets/home/home.png",
+		icon: "assets/home/icon.png",
 		// 网站Logo图片路径
 		logo: "assets/home/logo.png",
 	},
@@ -439,7 +439,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	mode: "meting", // 音乐播放器模式，可选 "local" 或 "meting"
 	meting_api:
 		"https://www.bilibili.uno/api?server=:server&type=:type&id=:id&auth=:auth&r=:r", // Meting API 地址
-	id: "14164869977", // 歌单ID
+	id: "7576964900", // 歌单ID
 	server: "netease", // 音乐源服务器。有的meting的api源支持更多平台,一般来说,netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
 	type: "playlist", // 播单类型
 };
@@ -652,7 +652,7 @@ export const pioConfig: import("./types/config").PioConfig = {
 		home: "点击这里回到首页！", // 首页提示
 		skin: ["想看看我的新衣服吗？", "新衣服真漂亮~"], // 换装提示
 		close: "QWQ 下次再见吧~", // 关闭提示
-		link: "https://github.com/matsuzaka-yuki/Mizuki", // 关于链接
+		link: "https://space.bilibili.com/282601111?spm_id_from=333.1369.0.0", // 关于链接
 	},
 };
 
