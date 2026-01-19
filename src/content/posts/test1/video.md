@@ -12,11 +12,13 @@ Hello~
 :::note[我的BiliBili主页]
 [点击我](https://space.bilibili.com/282601111?spm_id_from=333.1369.0.0 "点我跳转")跳转到BiliBili主页
 :::
-```
-~~~~~~~~~
-~~~~~~~~~
-~~~~~~~~~
-```
+这是**加粗**
+这是*斜体*
+>这是引用语句
+>>-Yes<p>
+>>-No
+***
+↓是我的[*视频*]("https://www.bilibili.com/video/BV1gXrkBGEWY/?spm_id_from=333.1387.homepage.video_card.click")
 ---
 ## Bilibili
 
