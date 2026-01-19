@@ -98,5 +98,4 @@ const localAnimeList: AnimeItem[] = [
 		endDate: "2025-10",
 	},
 ];
-
 export default localAnimeList;

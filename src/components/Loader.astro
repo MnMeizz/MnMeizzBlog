@@ -1,0 +1,242 @@
+---
+// src/components/Loader.astro
+---
+<div id="loader-container">
+    <!-- 涟漪画布 -->
+    <canvas id="ripple-canvas"></canvas>
+    
+    <div class="content-wrapper">
+        <div class="hint-text">MnMeizz BLOG</div>
+    </div>
+    
+    <!-- 新增：点击进入提示文字 + 解锁按钮容器 -->
+    <div class="btn-wrapper">
+        <div class="enter-text">点击进入</div>
+        <button id="unlock-btn" aria-label="Enter Site">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 11l5 5 5-5M7 7l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<style>
+    /* 引入本地字体 */
+    @font-face {
+        font-family: 'LuoliTi';
+        src: url('/assets/font/萝莉体 第二版.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'ZenMaruGothic';
+        src: url('/assets/font/ZenMaruGothic-Medium.ttf') format('truetype');
+        font-weight: 500;
+        font-style: normal;
+    }
+
+    #loader-container {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: #ffffff;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: 
+            transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), 
+            opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        opacity: 1;
+    }
+
+    #loader-container.unlocked {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        transition: opacity 1s ease-out;
+    }
+
+    #loader-container.unlocked canvas {
+        opacity: 0;
+    }
+
+    .content-wrapper {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        transition: opacity 0.8s ease-out;
+    }
+
+    #loader-container.unlocked .content-wrapper {
+        opacity: 0;
+    }
+
+    .hint-text {
+        color: #f675a8;
+        letter-spacing: 0.6em;
+        /* 应用萝莉体 */
+        font-family: 'LuoliTi', sans-serif;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        text-shadow: 0 0 10px rgba(246, 117, 168, 0.2);
+    }
+
+    /* 新增：按钮容器（包含提示文字+按钮） */
+    .btn-wrapper {
+        position: absolute;
+        bottom: 8%;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px; /* 文字和按钮间距 */
+        transition: opacity 0.8s ease-out;
+    }
+
+    #loader-container.unlocked .btn-wrapper {
+        opacity: 0;
+    }
+
+    /* 新增：点击进入提示文字 */
+    .enter-text {
+        color: #f675a8;
+        font-family: 'ZenMaruGothic', 'LuoliTi', sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        opacity: 0.8;
+        text-shadow: 0 0 8px rgba(246, 117, 168, 0.2);
+    }
+
+    #unlock-btn {
+        background: none;
+        border: none;
+        color: #f675a8;
+        cursor: pointer;
+        animation: bounce 2s infinite;
+        transition: 
+            all 0.3s ease,
+            opacity 0.8s ease-out;
+    }
+
+    #loader-container.unlocked #unlock-btn {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    #unlock-btn:hover {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 15px #f675a8);
+    }
+
+    #unlock-btn svg { width: 45px; height: 45px; }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-12px); }
+        60% { transform: translateY(-6px); }
+    }
+</style>
+
+<script>
+    function initRippleScene() {
+        const canvas = document.getElementById('ripple-canvas') as HTMLCanvasElement;
+        const container = document.getElementById('loader-container');
+        const btn = document.getElementById('unlock-btn');
+        if (!canvas || !container || !btn) return;
+
+        const ctx = canvas.getContext('2d')!;
+        let width: number, height: number;
+        let raindrops: Array<{
+            x: number,
+            y: number,
+            radius: number,
+            maxRadius: number,
+            opacity: number
+        }> = [];
+        const RAINDROP_COUNT = 15; 
+        const RIPPLE_SPEED = 0.6;
+        let isUnlocking = false;
+        let fadeOutProgress = 1;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function createRaindrop() {
+            return {
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: 0,
+                maxRadius: Math.random() * 80 + 60,
+                opacity: Math.random() * 0.5 + 0.3
+            };
+        }
+
+        function initRaindrops() {
+            raindrops = [];
+            for (let i = 0; i < RAINDROP_COUNT; i++) {
+                raindrops.push(createRaindrop());
+            }
+        }
+
+        function drawRipples() {
+            ctx.clearRect(0, 0, width, height);
+
+            raindrops = raindrops.map(drop => {
+                drop.radius += RIPPLE_SPEED * fadeOutProgress;
+                drop.opacity = (1 - (drop.radius / drop.maxRadius)) * fadeOutProgress;
+
+                ctx.beginPath();
+                ctx.arc(drop.x, drop.y, drop.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(246, 117, 168, ${drop.opacity})`;
+                ctx.lineWidth = 2 * fadeOutProgress;
+                ctx.stroke();
+
+                if (drop.radius >= drop.maxRadius) {
+                    return createRaindrop();
+                }
+                return drop;
+            });
+
+            if (isUnlocking) {
+                fadeOutProgress -= 0.01;
+                if (fadeOutProgress <= 0) return;
+            }
+
+            requestAnimationFrame(drawRipples);
+        }
+
+        resize();
+        initRaindrops();
+        window.addEventListener('resize', () => {
+            resize();
+            initRaindrops();
+        });
+        drawRipples();
+
+        btn.addEventListener('click', () => {
+            isUnlocking = true;
+            container.classList.add('unlocked');
+            
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 1800);
+        });
+    }
+
+    document.addEventListener('astro:page-load', initRippleScene);
+    if (document.readyState !== 'loading') initRippleScene();
+</script>
