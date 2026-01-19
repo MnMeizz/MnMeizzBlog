@@ -516,6 +516,26 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 				collapseThreshold: 5,
 			},
 		},
+		// ========== 新增：B站头像组件（放在右侧栏，order:4，站点统计上方） ==========
+		{
+			type: "bilibili-profile", // 自定义HTML组件类型
+			enable: true,
+			order: 4, // 比site-stats的order:5小，确保显示在上方
+			position: "top",
+			sidebar: "right", // 右侧栏
+			class: "onload-animation",
+			animationDelay: 150,
+			// 嵌入自定义组件的HTML（关键：通过Astro的组件导入语法嵌入）
+			props: {
+				title: "我的 B 站主页", // 组件标题（可选）
+				// 注意：这里需要用组件的渲染结果，或者直接写HTML
+				html: `
+          <div class="bilibili-profile-container">
+            <!-- 这里会渲染我们创建的BilibiliProfile组件 -->
+          </div>
+        `,
+			},
+		},
 		{
 			// 组件类型：标签组件
 			type: "tags",

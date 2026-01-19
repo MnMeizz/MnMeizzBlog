@@ -9,6 +9,8 @@ import SiteStats from "@/components/widget/SiteStats.astro";
 import Tags from "@/components/widget/Tags.astro";
 import TOC from "@/components/widget/TOC.astro";
 import { widgetManager } from "@/utils/widget-manager";
+//新加(blibili主页)
+import BilibiliProfile from "@/components/widget/BilibiliProfile.astro";
 
 interface Props {
 	class?: string;
@@ -34,6 +36,7 @@ const componentMap = {
 	"music-player": MusicPlayer,
 	"site-stats": SiteStats,
 	calendar: Calendar,
+  "bilibili-profile": BilibiliProfile, // 新增：自定义type → 组件映射
 };
 
 // 渲染组件的辅助函数

@@ -1,0 +1,201 @@
+---
+// 1. 导入astro-icon的Icon组件（项目已有的）
+import { Icon } from "astro-icon/components";
+
+// 2. 仅请求昵称的API（保留你指定的接口）
+const API_URL = "https://api.bilibili.com/x/web-interface/card?mid=282601111";
+
+// 3. 基础配置：头像URL + 各字段兜底值
+const userData = {
+  nickname: "B站用户", // 昵称兜底值
+  avatar: "http://youke.xn--y7xa690gmna.cn/s1/2026/01/19/696e2436806d0.webp", // 你的头像URL
+  follower: 0, // 粉丝数兜底值
+  like_num: 0  // 点赞数兜底值
+};
+
+// 4. 请求API获取昵称、粉丝数、点赞数
+try {
+  const res = await fetch(API_URL, {
+    headers: {
+      "Referer": "https://space.bilibili.com/282601111",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/129.0.0.0 Safari/537.36"
+    }
+  });
+  const resJson = await res.json();
+  if (resJson.code === 0 && resJson.data) {
+    userData.nickname = resJson.data.card?.name || userData.nickname;
+    userData.follower = resJson.data.follower || userData.follower; // 粉丝数
+    userData.like_num = resJson.data.like_num || userData.like_num; // 点赞数
+  }
+} catch (err) {
+  console.log("API请求失败，用兜底值：", err);
+}
+
+// 5. 经验固定值（你指定的）
+const fixedExp = {
+  current: 26698, // 当前成长
+  need: 2102,     // 升级Lv6还需
+  total: 26698 + 2102 // 升级Lv6总经验
+};
+const expProgress = (fixedExp.current / fixedExp.total) * 100; // 进度百分比
+---
+
+<!-- 保留原有样式，适配Font Awesome图标 -->
+<style>
+  .bilibili-card {
+    padding: 1.2rem;
+    background: var(--card-bg, #fff);
+    border-radius: 0.8rem;
+    text-align: center;
+    box-shadow: var(--card-shadow, 0 2px 8px rgba(0,0,0,0.1));
+    color: var(--text-primary, #333);
+  }
+  .avatar-container {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 0.8rem;
+    /* 容器圆形边框 */
+    border: 2px solid #e5e7eb;
+    border-radius: 50%;
+    padding: 2px;
+  }
+  .avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 84px;
+    height: 84px;
+    border-radius: 50%; /* 强制圆形 */
+    object-fit: cover; /* 防止图片拉伸 */
+    z-index: 1;
+    /* 头像内层圆形边框 */
+    border: 3px solid #fff;
+  }
+  .nickname {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    color: var(--text-primary, #333);
+  }
+  /* 粉丝数/点赞数展示样式（适配Font Awesome图标） */
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+  }
+  .stats-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  /* Font Awesome图标样式：适配文字高度，统一颜色 */
+  .stats-icon {
+    color: #fb7299; /* 匹配按钮颜色 */
+    width: 1rem;    /* 统一图标大小 */
+    height: 1rem;
+    flex-shrink: 0; /* 防止图标压缩 */
+  }
+  /* 等级条样式（匹配你的截图） */
+  .level-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+  }
+  .level-tag {
+    background: #f9e076;
+    color: #d48806;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  .exp-bar {
+    flex: 1;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin: 0 0.5rem;
+    overflow: hidden;
+  }
+  .exp-progress {
+    height: 100%;
+    background: #f9c74f;
+    transition: width 0.6s ease;
+  }
+  .exp-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary, #666);
+    margin: 0 0 1rem;
+  }
+  .btn-link {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background: var(--card-hover-bg, #f5f5f5);
+    color: var(--link-color, #fb7299);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: background 0.3s ease;
+  }
+  .btn-link:hover {
+    background: var(--card-active-bg, #eee);
+  }
+</style>
+
+<div class="bilibili-card">
+  <div class="avatar-container">
+    <!-- 头像用你指定的URL，圆形边框展示 -->
+    <img 
+      class="avatar" 
+      src={userData.avatar} 
+      alt={`${userData.nickname}的头像`}
+      loading="lazy"
+    />
+  </div>
+
+  <!-- 昵称：从API获取 -->
+  <h3 class="nickname">{userData.nickname}</h3>
+
+  <!-- 粉丝数+点赞数（改用项目已有的Font Awesome图标，无报错） -->
+  <div class="stats-row">
+    <div class="stats-item">
+      <!-- 粉丝图标：fa6-solid:users（项目已安装，替代ic:sharp-people-alt） -->
+      <Icon name="fa6-solid:users" class="stats-icon" />
+      <span>粉丝 {userData.follower.toLocaleString()}</span>
+    </div>
+    <div class="stats-item">
+      <!-- 点赞图标：fa6-solid:thumbs-up（项目已安装，替代streamline-plump:like-1-solid） -->
+      <Icon name="fa6-solid:thumbs-up" class="stats-icon" />
+      <span>点赞 {userData.like_num.toLocaleString()}</span>
+    </div>
+  </div>
+
+  <!-- 等级条（内联进度，无CSS错误） -->
+  <div class="level-bar">
+    <span class="level-tag">LV5</span>
+    <div class="exp-bar">
+      <div class="exp-progress" style={`width: ${expProgress}%;`}></div>
+    </div>
+    <span class="level-tag">LV6</span>
+  </div>
+
+  <!-- 固定经验文本 -->
+  <p class="exp-text">
+    当前成长{fixedExp.current}，距离升级Lv6还需要{fixedExp.need}
+  </p>
+
+  <a 
+    class="btn-link" 
+    href="https://space.bilibili.com/282601111" 
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    访问我的B站空间
+  </a>
+</div>
