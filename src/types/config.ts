@@ -326,6 +326,7 @@ export type FooterConfig = {
 // 组件配置类型定义
 export type WidgetComponentType =
 	| "profile"
+	| "bilibili-profile"
 	| "announcement"
 	| "categories"
 	| "tags"
