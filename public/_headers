@@ -7,3 +7,11 @@
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET
   Access-Control-Max-Age: 86400
+
+/js/ani-cursor.bundle.js
+  Cache-Control: public, max-age=31536000, immutable
+  ETag: "ani-cursor-bundle"
+
+/custom_cursors/*
+  Cache-Control: public, max-age=31536000, immutable
+  ETag: "cursor-assets"

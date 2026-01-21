@@ -174,6 +174,12 @@ if (siteConfig.font) {
 	data-overlayscrollbars-initialize
 >
 	<head>
+		<!-- 预加载核心光标文件，解决加载慢问题 -->
+		<script is:inline client:load>
+		<link rel="preload" href="/js/ani-cursor.bundle.js" as="script">
+		<link rel="preload" href="/custom_cursors/loc.ani" as="fetch" crossorigin>
+		<link rel="preload" href="/custom_cursors/pointer.ani" as="fetch" crossorigin>
+		</script>
 		<!-- 第三方分析脚本 - 延迟加载优化 -->
 		<script is:inline>
 			// 使用 requestIdleCallback 延迟加载第三方脚本
@@ -1311,36 +1317,55 @@ function disableAnimation() {
 	import "../scripts/theme-optimizer.js";
 </script>
 
-<!-- 自定义光标配置 -->
-<script is:inline>
-  const script = document.createElement("script");
-  script.src = "/js/ani-cursor.bundle.js";
-  script.onload = () => {
-    if (window["ani-cursor.js"] && typeof window["ani-cursor.js"].setANICursor === "function") {
-      const cursorConfigs = [
-        { selector: "body", ani: "/custom_cursors/loc.ani" },
-		{ selector: "span, a, img, .calendar-day, .cursor-pointer, button", ani : "/custom_cursors/pointer.ani"},
-        { selector: "input, textarea, [contenteditable]", ani: "/custom_cursors/text.ani" },
-        { selector: "canvas", ani: "/custom_cursors/help.ani" },
-        { selector: ".loading, .btn-loading", ani: "/custom_cursors/busy.ani" },
-        { selector: ".draggable-card", ani: "/custom_cursors/move.ani" },
-        { selector: "[disabled], .disabled", ani: "/custom_cursors/unavailable.ani" },
-        { selector: ".editor", ani: "/custom_cursors/handwriting.ani" },
-        { selector: ".async-loading", ani: "/custom_cursors/working.ani" },
-		{ selector: "move", ani: "/custom_cursors/move.ani" }
-      ];
-      cursorConfigs.forEach(config => {
-        window["ani-cursor.js"].setANICursor(
-          config.selector,
-          config.ani,
-          "auto",
-          32,
-          32
-        );
-      });
-    } else {
-      console.error("找不到 setANICursor，检查 ani-cursor.bundle.js 是否被正确引用");
-    }
-  };
-  document.head.appendChild(script);
+<!-- 最终版：脚本只加载一次 + 切换页面光标自动重绑 -->
+<script is:inline client:load>
+  // 1. 单例标记：确保脚本只加载一次
+  let cursorScriptLoaded = false;
+
+  // 2. 核心绑定函数（切换页面只执行绑定，不重新加载脚本）
+  function bindANICursor() {
+    // 等待DOM和脚本都就绪
+    if (!document.body || !window["ani-cursor.js"]?.setANICursor) return;
+
+    // 清除旧绑定避免冲突（只清核心元素，不卡顿）
+    document.querySelectorAll('body, a, button, input, textarea, canvas, [disabled]').forEach(el => {
+      el.style.cursor = '';
+    });
+
+    // 重新绑定光标（用原路径，不重复请求资源）
+    const cursorConfigs = [
+      { selector: "body", ani: "/custom_cursors/pointer.ani" },
+      { selector: "span, a, img, .calendar-day, .cursor-pointer, button", ani : "/custom_cursors/link.ani"},
+      { selector: "input, textarea, [contenteditable]", ani: "/custom_cursors/text.ani" },
+      { selector: "canvas", ani: "/custom_cursors/help.ani" },
+      { selector: "[disabled], .disabled", ani: "/custom_cursors/unavailable.ani" },
+    ];
+    cursorConfigs.forEach(config => {
+      window["ani-cursor.js"].setANICursor(config.selector, config.ani, "auto", 32, 32);
+    });
+  }
+
+  // 3. 加载脚本（仅执行一次）
+  function loadCursorScript() {
+    if (cursorScriptLoaded) return;
+    cursorScriptLoaded = true;
+
+    const script = document.createElement("script");
+    script.src = "/js/ani-cursor.bundle.js";
+    // 脚本加载完成后首次绑定
+    script.onload = bindANICursor;
+    // 加载失败仅重试一次
+    script.onerror = () => {
+      setTimeout(() => document.head.appendChild(script.cloneNode()), 2000);
+    };
+    document.head.appendChild(script);
+  }
+
+  // 4. 初始化：首次加载脚本
+  loadCursorScript();
+
+  // 5. 路由切换监听（只重绑，不重加载脚本）
+  window.addEventListener("astro:page-load", bindANICursor); // Astro切换页面
+  window.addEventListener("popstate", bindANICursor); // 前进后退
+  document.addEventListener("DOMContentLoaded", bindANICursor); // 首次DOM就绪
 </script>
