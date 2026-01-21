@@ -33,9 +33,9 @@ try {
 
 // 5. 经验固定值（你指定的）
 const fixedExp = {
-  current: 26698, // 当前成长
-  need: 2102,     // 升级Lv6还需
-  total: 26698 + 2102 // 升级Lv6总经验
+  current: 26728, // 当前成长
+  need: 2072,     // 升级Lv6还需
+  total: 26728 + 2072 // 升级Lv6总经验
 };
 const expProgress = (fixedExp.current / fixedExp.total) * 100; // 进度百分比
 ---
@@ -59,6 +59,7 @@ const expProgress = (fixedExp.current / fixedExp.total) * 100; // 进度百分�
     border: 2px solid #e5e7eb;
     border-radius: 50%;
     padding: 2px;
+    cursor: pointer; /* 鼠标悬浮时显示手型 */
   }
   .avatar {
     position: absolute;
@@ -72,6 +73,12 @@ const expProgress = (fixedExp.current / fixedExp.total) * 100; // 进度百分�
     z-index: 1;
     /* 头像内层圆形边框 */
     border: 3px solid #fff;
+    /* 新增：过渡效果，让旋转更丝滑 */
+    transition: transform 1.2s ease;
+  }
+  /* 新增：鼠标悬浮头像容器时，头像旋转180度 */
+  .avatar-container:hover .avatar {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
   .nickname {
     font-size: 1rem;

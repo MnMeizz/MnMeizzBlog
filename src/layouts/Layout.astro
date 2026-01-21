@@ -1310,3 +1310,37 @@ function disableAnimation() {
 <script>
 	import "../scripts/theme-optimizer.js";
 </script>
+
+<!-- 自定义光标配置 -->
+<script is:inline>
+  const script = document.createElement("script");
+  script.src = "/js/ani-cursor.bundle.js";
+  script.onload = () => {
+    if (window["ani-cursor.js"] && typeof window["ani-cursor.js"].setANICursor === "function") {
+      const cursorConfigs = [
+        { selector: "body", ani: "/custom_cursors/loc.ani" },
+		{ selector: "span, a, img, .calendar-day, .cursor-pointer, button", ani : "/custom_cursors/pointer.ani"},
+        { selector: "input, textarea, [contenteditable]", ani: "/custom_cursors/text.ani" },
+        { selector: "canvas", ani: "/custom_cursors/help.ani" },
+        { selector: ".loading, .btn-loading", ani: "/custom_cursors/busy.ani" },
+        { selector: ".draggable-card", ani: "/custom_cursors/move.ani" },
+        { selector: "[disabled], .disabled", ani: "/custom_cursors/unavailable.ani" },
+        { selector: ".editor", ani: "/custom_cursors/handwriting.ani" },
+        { selector: ".async-loading", ani: "/custom_cursors/working.ani" },
+		{ selector: "move", ani: "/custom_cursors/move.ani" }
+      ];
+      cursorConfigs.forEach(config => {
+        window["ani-cursor.js"].setANICursor(
+          config.selector,
+          config.ani,
+          "auto",
+          32,
+          32
+        );
+      });
+    } else {
+      console.error("找不到 setANICursor，检查 ani-cursor.bundle.js 是否被正确引用");
+    }
+  };
+  document.head.appendChild(script);
+</script>
