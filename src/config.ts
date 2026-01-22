@@ -24,7 +24,7 @@ const SITE_TIMEZONE = 8; //设置你的网站时区 from -12 to 12 default in UT
 export const siteConfig: SiteConfig = {
 	title: "MnMeizz",
 	subtitle: "Blog",
-	siteURL: "https://mnmeizzblog-3sfaj212tn.edgeone.cool/", // 请替换为你的站点URL，以斜杠结尾
+	siteURL: "http://124.221.162.52/", // 请替换为你的站点URL，以斜杠结尾
 	siteStartDate: "2026-01-18", // 站点开始运行日期，用于站点统计组件计算运行天数
 
 	timeZone: SITE_TIMEZONE,
@@ -660,10 +660,10 @@ export const widgetConfigs = {
 } as const;
 
 export const umamiConfig = {
-	enabled: false, // 是否显示Umami统计
-	apiKey: import.meta.env.UMAMI_API_KEY || "api_xxxxxxxx", // API密钥优先从环境变量读取，否则使用配置文件中的值
+	enabled: true, // 是否显示Umami统计
+	apiKey: import.meta.env.UMAMI_API_KEY || "api_lGglnhNSQtygNw71elP6a8kT7SyHawlf", // API密钥优先从环境变量读取，否则使用配置文件中的值
 	baseUrl: "https://api.umami.is", // Umami Cloud API地址
 	scripts: `
-<script defer src="XXXX.XXX" data-website-id="ABCD1234"></script>
+<script defer src="https://cloud.umami.is/script.js"     data-website-id="833171f4-58a0-4fda-be9c-e48e27e68e4b"></script>
   `.trim(), // 上面填你要插入的Script,不用再去Layout中插入
 } as const;
