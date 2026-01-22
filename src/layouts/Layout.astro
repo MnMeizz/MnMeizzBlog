@@ -1334,8 +1334,8 @@ function disableAnimation() {
 
     // 重新绑定光标（用原路径，不重复请求资源）
     const cursorConfigs = [
-      { selector: "body", ani: "/custom_cursors/pointer.ani" },
-      { selector: "span, a, img, .calendar-day, .cursor-pointer, button", ani : "/custom_cursors/link.ani"},
+      { selector: "body, div", ani: "/custom_cursors/pointer.ani" },
+      { selector: "span, a, img, .calendar-day, .cursor-pointer, button, svg", ani : "/custom_cursors/link.ani"},
       { selector: "input, textarea, [contenteditable]", ani: "/custom_cursors/text.ani" },
       { selector: "canvas", ani: "/custom_cursors/help.ani" },
       { selector: "[disabled], .disabled", ani: "/custom_cursors/unavailable.ani" },

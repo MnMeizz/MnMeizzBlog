@@ -414,7 +414,7 @@ export const commentConfig: CommentConfig = {
 	enable: true, // 启用评论功能。当设置为 false 时，评论组件将不会显示在文章区域。
 	twikoo: {
 		envId: "https://asd-blush-sigma.vercel.app/",
-		lang: SITE_LANG,
+		lang: "zh-CN",
 	},
 };
 
@@ -526,15 +526,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			class: "onload-animation",
 			animationDelay: 150,
 			// 嵌入自定义组件的HTML（关键：通过Astro的组件导入语法嵌入）
-			props: {
-				title: "我的 B 站主页", // 组件标题（可选）
-				// 注意：这里需要用组件的渲染结果，或者直接写HTML
-				html: `
-          <div class="bilibili-profile-container">
-            <!-- 这里会渲染我们创建的BilibiliProfile组件 -->
-          </div>
-        `,
-			},
 		},
 		{
 			// 组件类型：标签组件
