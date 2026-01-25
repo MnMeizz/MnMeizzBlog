@@ -44,7 +44,7 @@ Unity 是游戏开发（尤其新手入门、跨平台开发）的高性价比�
 4. 运行安装包，按照软件内置指引完成安装流程
 ## 第二部分: 开始自己的第一个2D项目
 **[👉 点击跳转到教学视频](#unity-learn)**
-1. 获取素材: [Unity商店]("https://assetstore-fallback.unity.com/?locale=zh-CN") &nbsp;&nbsp;[Pixlab24]("https://pixlab24.com/")
+1. 获取素材: [Unity商店](https://assetstore-fallback.unity.com/?locale=zh-CN) &nbsp;&nbsp;[Pixlab24](https://pixlab24.com/)
 > 推荐使用(Pixel Adventure 1)的免费素材学习制作横板游戏
 
 2. 创建自己的项目 推荐2D(Built-In Render Pipeline)
