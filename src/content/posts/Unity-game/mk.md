@@ -8,7 +8,7 @@ draft: false
 ---
 <div>
 <iframe 
-    src="/posts/Unity-game/Game/index.html"
+    src="https://mnmei-unitygame.static.hf.space"
     style="width:100%; max-width:960px; height:calc(100vh - 600px); border:0;"
     scrolling="no" 
     allowfullscreen 
