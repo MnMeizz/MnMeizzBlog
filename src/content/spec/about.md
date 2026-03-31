@@ -11,7 +11,7 @@
 ### 核心技能
 - 编程语言：C、C++、Python、Java、JavaScript
 - 技术框架：Vue.js、Electron
-- 工具/其他：Git、Docker
+- 工具/其他：Git、Docker、Unity、Blender、Pr
 
 ### 关注方向
 - 前端工程化与性能优化
