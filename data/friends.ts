@@ -5,9 +5,9 @@ export const friendsData: Friend[] = [
   {
     "id": "friend_1777650674645",
     "name": "shannn",
-    "url": "shannn.top",
+    "url": "http://shannn.top/",
     "avatar": "https://free.picui.cn/free/2026/05/02/69f4ce5c6285e.jpg",
-    "description": "这位朋友很神秘，什么都没写。",
+    "description": "那我就会在此地等候",
     "themeColor": "#6366f1"
   },
   {
