@@ -11,6 +11,16 @@ export type Project = {
 
 export const projectsData: Project[] = [
   {
+    "id": "proj_1779203425320",
+    "name": "BookHead",
+    "githubUrl": "...",
+    "description": "耗时3天制作的恐怖游戏demo",
+    "icon": "🖊",
+    "tags": [
+      "UE5"
+    ]
+  },
+  {
     "id": "proj_1777651398491",
     "name": "Mizuki",
     "githubUrl": "https://github.com/LyraVoid/Mizuki",
