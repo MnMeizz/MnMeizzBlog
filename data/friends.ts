@@ -3,6 +3,14 @@ export interface Friend { id: string; name: string; url: string; description: st
 
 export const friendsData: Friend[] = [
   {
+    "id": "friend_1788835463147",
+    "name": "鹤川",
+    "url": "https://www.yoseaholic.top/",
+    "avatar": "https://free.picui.cn/free/17305/2026/09/08/6a9f778a42307.jpg",
+    "description": "悟已往之不谏 知来者之可追",
+    "themeColor": "#64f280"
+  },
+  {
     "id": "friend_1777650674645",
     "name": "shannn",
     "url": "http://shannn.top/",
